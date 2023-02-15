@@ -9,10 +9,33 @@ let foodItems = props.foodItem;
 const priceRef = useRef()
 const [qty,setQty] = useState(1)
 const [size,setSize] = useState("")
+
+
+
 const handleAddToCart = async()=>{
-  await dispatch({type:"ADD",id:foodItems._id,name:foodItems.name,price:finalPrice,qty:qty,size:size})
-  console.log(data)
+  let food = []
+  for(const item of data){
+    if(item.id===props.foodItem._id){
+      food=item;
+      break;
+    }
+  }
+  if(food!=[]){
+    if(food.size===size){
+      await dispatch({type:"UPDATE",id:foodItems._id,price:finalPrice,qty:qty})
+      return 
+    }
+    else if(food.size!==size){
+      await dispatch({type:"ADD",id:foodItems._id,name:foodItems.name,price:finalPrice,qty:qty,size:size})
+      return
+    }
+    await dispatch({type:"ADD",id:foodItems._id,name:foodItems.name,price:finalPrice,qty:qty,size:size})
+  }
+  
 }
+
+
+
 let finalPrice = qty*parseInt(options[size])
 useEffect(()=>{
   setSize(priceRef.current.value)

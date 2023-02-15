@@ -11,6 +11,7 @@ import {
   Route
 } from "react-router-dom";
 import { CartProvider } from './components/ContextReducer';
+import Cart from './screens/Cart';
 function App() {
   return (
     

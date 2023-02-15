@@ -8,7 +8,19 @@ const reducer = (state,action)=>{
     switch(action.type){
         case "ADD":
             return [...state,{id:action.id,name:action.name,qty:action.qty,size:action.size,price:action.price,img:action.img}]
-        
+        case "REMOVE":
+            //in case of remove we can't remove directly from state we need to store it first in another variable then remove it.
+            let newArr = [...state]
+            newArr.splice(action.index,1)
+            return newArr;
+        case "UPDATE":
+            let arr = [...state]
+            arr.find((food,index)=>{
+                if(food.id===action.id){
+                    arr[index]={...food,qty:parseInt(action.qty)+food.qty,price:action.price+food.price}
+                }
+                return arr
+            })
         default:
             console.log("Error in Reducer")
     }
